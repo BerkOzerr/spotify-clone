@@ -358,9 +358,14 @@ body {
 }
 .sp-icon-btn:hover {
   color: var(--sp-white);
+  transform: scale(1.2);
 }
 .sp-icon-btn:active {
   transform: scale(0.9);
+  stroke: greenyellow;
+}
+.sp-icon-btn.active {
+  stroke: greenyellow;
 }
 
 /* Play Button (large circular) */
@@ -677,13 +682,13 @@ body {
 
 .sp-now-playing {
   grid-column: 1 / -1;
-  background: var(--sp-dark-highlight);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   align-items: center;
   padding: 0 16px;
   height: var(--now-playing-height);
+  width: 90%;
   gap: 8px;
   z-index: 100;
 }
@@ -788,7 +793,7 @@ body {
 
 .sp-progress__time {
   font-size: 0.6875rem;
-  color: var(--sp-text-base);
+  color: var(--sp-white);
   font-variant-numeric: tabular-nums;
   min-width: 36px;
 }
@@ -801,7 +806,7 @@ body {
   -webkit-appearance: none;
   appearance: none;
   flex: 1;
-  height: 4px;
+  height: 2px;
   border-radius: 2px;
   background: var(--sp-dark-press);
   outline: none;

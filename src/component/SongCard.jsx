@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { clickActiveSong } from "../lib/playerSlice";
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clickActiveSong, playPause } from "../lib/playerSlice";
 import { Play } from "lucide-react";
 
 const SongCard = ({ song, i }) => {
+  const player = useSelector((state) => state.player);
   const { attributes, id } = song;
-  const { name, artistName, artwork } = attributes;
+  const { name, artistName, artwork, previews } = attributes;
   const { url } = artwork;
   const [hover, setHover] = useState(false);
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const SongCard = ({ song, i }) => {
       className="sp-card  "
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => dispatch(clickActiveSong(song))}
+      onClick={() => dispatch(clickActiveSong({ song, i }))}
     >
       <div className="flex relative  flex-row gap-4 hover:opacity-60 ease-in-out transition-all duration-200 delay-100">
         <img
@@ -40,18 +41,22 @@ const SongCard = ({ song, i }) => {
             className={`flex  flex-col items-start justify-start p-2 gap-4 overflow-hidden `}
           >
             {hover ? (
-              <marquee className="sp-card__title lg:text-xl sm:text-xs ">
+              <marquee className=" lg:text-md sm:text-xs ">
                 {artistName}
               </marquee>
             ) : (
-              <span className="sp-card__title lg:text-xl sm:text-xs ">
-                {artistName}
-              </span>
+              <span className=" lg:text-md sm:text-xs ">{artistName}</span>
             )}
           </div>
         </div>
       </div>
-      {hover ? <Play className="absolute top-1/2 right-1/2" /> : <></>}
+      {hover ? (
+        <>
+          <Play className="sp-btn absolute top-1/2 right-1/2" />
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

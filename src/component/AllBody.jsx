@@ -1,7 +1,8 @@
 import Discover from "./Discover";
 import SideBar from "./SideBar";
-import TopPlay from "./TopPlay";
+
 import SearchBar from "./SearchBar";
+import MusicPlayer from "./MusicPlayer";
 
 const AllBody = () => {
   return (
@@ -13,8 +14,9 @@ const AllBody = () => {
         <div className="flex  bg-[#1a1a1a71] h-24 items-center   w-full">
           <SearchBar />
         </div>
-        <div className="flex w-full h-full">
+        <div className="relative flex w-full h-full">
           <Discover />
+          <MusicPlayer />
         </div>
       </div>
     </div>

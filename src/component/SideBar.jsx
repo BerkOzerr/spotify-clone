@@ -13,25 +13,26 @@ const SideBar = () => {
       </div>
       <div className="flex flex-row gap-2 cursor-pointer items-center hover:text-[#eeaeca] ">
         <Link className="flex gap-3  items-center " to={"/"}>
-          <House size={20} /> Discover
+          <House size={20} /> Songs
         </Link>
       </div>
-      <div className="flex flex-row gap-2 cursor-pointer items-center hover:text-[#eeaeca]  ">
+      {/* <div className="flex flex-row gap-2 cursor-pointer items-center hover:text-[#eeaeca]  ">
         <Link className="flex gap-3  items-center" to={"/"}>
           <Image size={20} /> Around You
         </Link>
-      </div>
+      </div> */}
       <div className="flex flex-row gap-2 cursor-pointer items-center hover:text-[#eeaeca]  ">
         <Link className="flex gap-3  items-center" to={"/artist"}>
           {" "}
-          <UserStar size={20} /> Top Artist
+          <UserStar size={20} />
+          Artists
         </Link>
       </div>
-      <div className="flex flex-row gap-2 cursor-pointer items-center hover:text-[#eeaeca]  ">
+      {/* <div className="flex flex-row gap-2 cursor-pointer items-center hover:text-[#eeaeca]  ">
         <Link className="flex gap-3  items-center" to={"/"}>
           <Hash size={20} /> Top Chart
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

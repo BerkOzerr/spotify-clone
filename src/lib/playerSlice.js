@@ -1,29 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { client } from "./axios";
+import { current } from "@reduxjs/toolkit";
 
-export const searchSongs = createAsyncThunk("searchSongs", async (songName) => {
+export const searchSongs = createAsyncThunk("searchSongs", async (song) => {
+  const { select, songName } = song;
+  console.log(select, songName);
   try {
     const response = await client.get(
-      `/search/multi?search_type=SONGS&offset=0&query=${songName}`,
+      `/search/multi?search_type=${select}&offset=0&query=${songName}`,
     );
-    return response;
+    return { data: response.data, select };
   } catch (error) {
     console.error(error);
   }
 });
-export const searchArtist = createAsyncThunk(
-  "searchArtist",
-  async (artistName) => {
-    try {
-      const response = await client.get(
-        `/search/multi?search_type=ARTISTS&offset=0&query=${artistName}`,
-      );
-      return response;
-    } catch (error) {
-      console.error(error);
-    }
-  },
-);
 
 const initialState = {
   songs: localStorage.getItem("songs")
@@ -33,7 +23,7 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("artists"))
     : [],
   activeSong: {},
-  isLoading: true,
+  isLoading: localStorage.getItem("songs") ? false : true,
   isPlaying: false,
   song: {},
   error: "",
@@ -122,38 +112,22 @@ const playerSlice = createSlice({
       })
       .addCase(searchSongs.fulfilled, (state, action) => {
         state.isLoading = false;
-        if (action?.payload.status === 200) {
-          state.songs = [action?.payload.data];
-          localStorage.setItem("songs", JSON.stringify(state.songs));
-        } else {
-          state.error = action?.payload.error.message;
-        }
+
         console.log(action);
+        if (action.payload.select === "ARTISTS") {
+          state.artists = [action?.payload?.data];
+          localStorage.setItem("artists", JSON.stringify(state.artists));
+        }
+        if (action.payload.select === "SONGS") {
+          console.log(action.payload.data);
+          state.songs = [action?.payload?.data];
+          localStorage.setItem("songs", JSON.stringify(state.songs));
+        }
       })
       .addCase(searchSongs.rejected, (state, action) => {
         state.isLoading = false;
         console.log(action);
-        state.error = action?.payload.error.message;
-      });
-
-    builder
-      .addCase(searchArtist.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(searchArtist.fulfilled, (state, action) => {
-        state.isLoading = false;
-        if (action?.payload.status === 200) {
-          state.artists = [action?.payload.data];
-          localStorage.setItem("songs", JSON.stringify(state.songs));
-        } else {
-          state.error = action?.payload.error.message;
-        }
-        console.log(action);
-      })
-      .addCase(searchArtist.rejected, (state, action) => {
-        state.isLoading = false;
-        console.log(action);
-        state.error = action?.payload.error.message;
+        state.error = action?.payload.error?.message;
       });
   },
 });

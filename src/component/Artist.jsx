@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import SearchBar from "./SearchBar";
 import SideBar from "./SideBar";
-import Discover from "./Discover";
-import MusicPlayer from "./MusicPlayer/MusicPlayer";
+import ArtistDiscover from "./ArtistDiscover";
 
 const Artist = () => {
   const player = useSelector((state) => state.player);
+  // console.log(player.artists[0].data.length);
   return (
     <div className="container-bg  min-h-svh  flex flex-row justify-evenly ">
       <div className="">
@@ -16,11 +16,10 @@ const Artist = () => {
           <SearchBar />
         </div>
         <div className="relative flex w-full h-full">
-          {player.songs.length != 0 ? <Discover /> : <></>}
-          {Object.keys(player.activeSong).length === 0 ? (
-            <></>
+          {player.artists[0].data.length > 0 ? (
+            <ArtistDiscover />
           ) : (
-            <MusicPlayer />
+            <span>Search Artist Name... </span>
           )}
         </div>
       </div>

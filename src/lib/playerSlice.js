@@ -37,13 +37,15 @@ const playerSlice = createSlice({
   reducers: {
     playPause: (state, action) => {
       //console.log(action);
-      if (action?.payload.p === "pause") {
+      if (action?.payload.p === "play") {
+        state.isPlaying = true;
+        action?.payload.audioRef.current.play();
+        return;
+      } else {
         state.isPlaying = false;
-        action?.payload.audioRef.current.pause();
+        action?.payload?.audioRef?.current.pause();
         return;
       }
-      state.isPlaying = true;
-      action?.payload.audioRef.current.play();
     },
     clickActiveSong: (state, action) => {
       if (action.payload.repeat) {

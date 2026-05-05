@@ -11,14 +11,28 @@ export const searchSongs = createAsyncThunk("searchSongs", async (songName) => {
     console.error(error);
   }
 });
+export const searchArtist = createAsyncThunk(
+  "searchArtist",
+  async (artistName) => {
+    try {
+      const response = await client.get(
+        `/search/multi?search_type=ARTISTS&offset=0&query=${artistName}`,
+      );
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+);
 
 const initialState = {
   songs: localStorage.getItem("songs")
     ? JSON.parse(localStorage.getItem("songs"))
     : [],
-  activeSong: localStorage.getItem("activeSong")
-    ? JSON.parse(localStorage.getItem("activeSong"))
-    : {},
+  artists: localStorage.getItem("artists")
+    ? JSON.parse(localStorage.getItem("artists"))
+    : [],
+  activeSong: {},
   isLoading: true,
   isPlaying: false,
   song: {},
@@ -33,7 +47,6 @@ const playerSlice = createSlice({
   reducers: {
     playPause: (state, action) => {
       //console.log(action);
-
       if (action?.payload.p === "pause") {
         state.isPlaying = false;
         action?.payload.audioRef.current.pause();
@@ -44,13 +57,12 @@ const playerSlice = createSlice({
     },
     clickActiveSong: (state, action) => {
       if (action.payload.repeat) {
-        console.log(action.payload.repeat); //repeat don't work
+        console.log(action.payload.repeat);
       }
       state.activeSong = { i: action?.payload.i, song: action?.payload.song };
 
       state.currentIndex = action.payload.i;
       state.isPlaying = true;
-      localStorage.setItem("activeSong", JSON.stringify(state.activeSong));
       playPause();
     },
     prevSong: (state, action) => {
@@ -119,6 +131,26 @@ const playerSlice = createSlice({
         console.log(action);
       })
       .addCase(searchSongs.rejected, (state, action) => {
+        state.isLoading = false;
+        console.log(action);
+        state.error = action?.payload.error.message;
+      });
+
+    builder
+      .addCase(searchArtist.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(searchArtist.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (action?.payload.status === 200) {
+          state.artists = [action?.payload.data];
+          localStorage.setItem("songs", JSON.stringify(state.songs));
+        } else {
+          state.error = action?.payload.error.message;
+        }
+        console.log(action);
+      })
+      .addCase(searchArtist.rejected, (state, action) => {
         state.isLoading = false;
         console.log(action);
         state.error = action?.payload.error.message;

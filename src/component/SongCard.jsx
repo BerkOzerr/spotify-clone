@@ -21,6 +21,7 @@ const SongCard = ({ song, i }) => {
     >
       <div className="flex relative  flex-row gap-4 hover:opacity-60 ease-in-out transition-all duration-200 delay-100">
         <img
+          loading="lazy"
           className="sp-card__image  hover:translate-[-2.5px] transition-all duration-75 delay-300 ease-linear"
           src={url}
           alt=""
@@ -30,22 +31,34 @@ const SongCard = ({ song, i }) => {
             className={`flex  flex-col items-start justify-start p-2 gap-4 overflow-hidden `}
           >
             {hover ? (
-              <marquee className="sp-card__subtitle  sm:text-xs ">
+              <marquee
+                className={`sp-card__subtitle   ${name.length < 15 ? "text-md" : "text-xs"} `}
+              >
                 {name}
               </marquee>
             ) : (
-              <span className="sp-card__subtitle  sm:text-xs ">{name}</span>
+              <span
+                className={`sp-card__subtitle   ${name.length < 15 ? "text-md" : "text-xs"} `}
+              >
+                {name}
+              </span>
             )}
           </div>
           <div
             className={`flex  flex-col items-start justify-start p-2 gap-4 overflow-hidden `}
           >
             {hover ? (
-              <marquee className=" lg:text-md sm:text-xs ">
+              <marquee
+                className={`sp-card__subtitle   ${artistName.length < 15 ? "text-md" : "text-xs"} `}
+              >
                 {artistName}
               </marquee>
             ) : (
-              <span className=" lg:text-md sm:text-xs ">{artistName}</span>
+              <span
+                className={`sp-card__subtitle   ${artistName.length < 15 ? "text-md" : "text-xs"} `}
+              >
+                {artistName}
+              </span>
             )}
           </div>
         </div>

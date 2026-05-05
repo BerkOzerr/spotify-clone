@@ -22,7 +22,7 @@ const SideBar = () => {
         </Link>
       </div>
       <div className="flex flex-row gap-2 cursor-pointer items-center hover:text-[#eeaeca]  ">
-        <Link className="flex gap-3  items-center" to={"/"}>
+        <Link className="flex gap-3  items-center" to={"/artist"}>
           {" "}
           <UserStar size={20} /> Top Artist
         </Link>

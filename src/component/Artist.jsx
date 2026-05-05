@@ -1,16 +1,11 @@
-import Discover from "./Discover";
-import SideBar from "./SideBar";
-
-import SearchBar from "./SearchBar";
-import MusicPlayer from "./MusicPlayer/MusicPlayer";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import SearchBar from "./SearchBar";
+import SideBar from "./SideBar";
+import Discover from "./Discover";
+import MusicPlayer from "./MusicPlayer/MusicPlayer";
 
-const AllBody = () => {
+const Artist = () => {
   const player = useSelector((state) => state.player);
-  // useEffect(() => {
-  //   console.log(player);
-  // }, []);
   return (
     <div className="container-bg  min-h-svh  flex flex-row justify-evenly ">
       <div className="">
@@ -33,4 +28,4 @@ const AllBody = () => {
   );
 };
 
-export default AllBody;
+export default Artist;

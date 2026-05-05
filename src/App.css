@@ -24,7 +24,8 @@
   --sp-text-bright: #ffffff;
   --sp-error: #e91429;
   --sp-warning: #e3b858;
-
+  --volume: 30%;
+  --progress: 0;
   /* Layout */
   --sidebar-width: 240px;
   --now-playing-height: 90px;
@@ -91,7 +92,7 @@ body {
    LAYOUT SHELL
    ============================================================ */
 .container-bg {
-  background: #eeaeca;
+  /* background: #eeaeca; */
   background: radial-gradient(
     circle,
     rgba(238, 174, 202, 1) 0%,
@@ -109,6 +110,33 @@ body {
   padding: 8px 8px 0;
 }
 
+.selection-search-bar select {
+  background-color: #1a1a1a;
+  padding: 4px;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 3px 3px 3px var(--sp-dark-press);
+}
+.selection-search-bar option {
+  background-color: var(--sp-dark-press);
+  padding: 2px;
+  border: none;
+  outline: none;
+  text-align: center;
+}
+.selection-search-bar option:hover {
+  opacity: 0.5;
+}
+.selection-search-bar select::picker {
+  background-color: red;
+}
+
+.selection-search-bar:hover {
+  opacity: 0.6;
+}
 .sp-main-view {
   background: var(--sp-dark);
   border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
@@ -470,7 +498,6 @@ body {
 }
 
 .sp-card__subtitle {
-  font-size: 0.8125rem;
   color: var(--sp-text-base);
   overflow: hidden;
   display: -webkit-box;
@@ -805,68 +832,95 @@ body {
 .sp-slider {
   -webkit-appearance: none;
   appearance: none;
-  flex: 1;
   height: 2px;
-  border-radius: 2px;
   background: var(--sp-dark-press);
   outline: none;
   cursor: pointer;
   position: relative;
+  opacity: 0.8;
 }
 
 .sp-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
   appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--sp-white);
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity var(--transition-fast);
-}
-
-.sp-slider:hover::-webkit-slider-thumb,
-.sp-slider:focus::-webkit-slider-thumb {
-  opacity: 1;
+  width: 3px;
+  height: 9px;
+  background-color: greenyellow;
+  opacity: 0.8;
 }
 
 .sp-slider::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--sp-white);
-  cursor: pointer;
-  border: none;
+  appearance: none;
+  width: 3px;
+  height: 9px;
+  background-color: greenyellow;
+  opacity: 1;
 }
 
 /* Progress fill via JS with --progress CSS var */
 .sp-slider--progress {
-  background: linear-gradient(
-    to right,
-    var(--sp-white) 0%,
-    var(--sp-white) var(--progress, 30%),
-    var(--sp-dark-press) var(--progress, 30%),
-    var(--sp-dark-press) 100%
-  );
+  width: var(--progress);
+  height: 100%;
+  background: greenyellow;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  transition-delay: 250ms;
+  transition: all 0.7s;
 }
 
-.sp-slider--volume {
-  background: linear-gradient(
-    to right,
-    var(--sp-white) 0%,
-    var(--sp-white) var(--volume, 70%),
-    var(--sp-dark-press) var(--volume, 70%),
-    var(--sp-dark-press) 100%
-  );
+.sp-slider-volume {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 1px;
+  background: var(--sp-dark-press);
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  opacity: 0.8;
+  transition: all 0.4s;
+}
+.sp-slider-volume:active {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 1px;
+  background: var(--sp-dark-press);
+  outline: none;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: all 0.7s;
 }
 
+.sp-slider-volume::-webkit-slider-thumb {
+  appearance: none;
+  width: 3px;
+  height: 9px;
+  background-color: greenyellow;
+}
+
+.sp-slider-volume::-moz-range-thumb {
+  appearance: none;
+  width: 3px;
+  height: 9px;
+  background-color: var(--sp-white);
+}
 /* Right — Volume & Extra */
 .sp-now-playing__extras {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 4px;
+}
+.volume-progress {
+  width: var(--volume);
+  height: 100%;
+  background: greenyellow;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  transition-delay: 250ms;
+  transition: all 0.7s;
 }
 
 .sp-volume {
